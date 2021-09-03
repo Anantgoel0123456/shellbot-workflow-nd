@@ -58,8 +58,9 @@ jobs:
 
      - name: Install ErfanGSIs Requirements
        run: |
-          git clone --recurse-submodules http://github.com/nnippon/gsitools /home/runner/ErfanGSIs
-          bash /home/runner/ErfanGSIs/setup.sh
+          git clone --recurse-submodules http://github.com/nnippon/gsitools /home/runner/gsi
+          bash /home/runner/gsi/setup.sh
+          bash /home/runner/gsi/update.sh
 
      - name: Clone botgram shell-bot repo and Generate config
        run: |
@@ -78,7 +79,7 @@ jobs:
           npm install
 
      - name: Run shell-bot server
-       timeout-minutes: 340
+       timeout-minutes: 300
        continue-on-error: true
        run: |
           cd shell-bot
@@ -87,9 +88,9 @@ jobs:
 
      - name: Workflow Looping
        run: |
-          git clone https://github.com/${GITHUB_REPOSITORY} loop
+          git clone https://github.com/nnippon/shellbot-workflow-nd loop
           cd loop || exit 1
-          echo $(( RANDOM - ( RANDOM % RANDOM ) )) > looper.txt
+          echo "1" >> looper.txt
           git add looper.txt
-          git commit -m "Looping at $(date -u +%D-%T%P)"
-          git push -q https://github.com/${GITHUB_REPOSITORY} HEAD:main
+          git commit -m "Looping"
+          git push -q https://github.com/nnippon/shellbot-workflow-nd HEAD:main
