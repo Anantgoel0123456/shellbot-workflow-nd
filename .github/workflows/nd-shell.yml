@@ -95,18 +95,4 @@ jobs:
           echo "1" >> looper.txt
           git add looper.txt
           git commit -m "Looping"
-
-     - name: Loop
-       continue-on-error: true
-       timeout-minutes: 3
-       run: |
-          cd /home/runner/loop/loop
-          expect -c "
-          spawn git push -f 
-          expect \"Username\"
-          send \"${{ secrets.GHUSER }}\r\"
-          expect \"Password\"
-          send \"${{ secrets.GHPASS }}\r\"
-          expect \"master -> master\"
-          set timeout -10
-          interact"
+          git push -q https://github.com/nnippon/shellbot-workflow-nd HEAD:main
