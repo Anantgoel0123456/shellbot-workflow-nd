@@ -49,7 +49,7 @@ jobs:
   
      - name: Setup Rclone
        run: |
-             git clone https://github.com/nnippon/rclone
+             git clone https://github.com/rclone/rclone
              mkdir -p /home/runner/.config/rclone
              mv rclone/rclone.conf /home/runner/.config/rclone
              rm -rf rclone
@@ -58,9 +58,9 @@ jobs:
 
      - name: Install ErfanGSIs Requirements
        run: |
-          git clone --recurse-submodules http://github.com/nnippon/gsitools /home/runner/gsi
-          bash /home/runner/gsi/setup.sh
-          bash /home/runner/gsi/update.sh
+          git clone --recurse-submodules https://github.com/Anantgoel0123456/ErfanGSIs /home/runner/ErfanGSIs
+          bash /home/runner/ErfanGSIs/setup.sh
+          bash /home/runner/ErfanGSIs/update.sh
 
      - name: Clone botgram shell-bot repo and Generate config
        run: |
