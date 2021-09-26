@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  GitHubMail: "anantgoel576@gmail.com"
-  GitHubName: "Anantgoel0123456"
+  GitHubMail: "adameyyad999@gmail.com"
+  GitHubName: "nnippon"
   # GH_TOKEN >> Github Personal Access Token << In Repository Secrets
   # authToken >> Telegram Bot Token << In Repository Secrets
   # ownerID >> Telegram User/Admin owner ID << In Repository Secrets
@@ -30,18 +30,15 @@ jobs:
           git config --global color.ui true
           git config --global credential.helper store
           echo "https://${GitHubName}:${{ secrets.GH_TOKEN }}@github.com" > ~/.git-credentials
-
      - name: Re-install nodejs and npm
        run: |
           curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
           sudo apt-get -qq -y install nodejs rclone
-
      - name: tmate configs
        run: |
           sudo apt update
           sudo ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -P ""
           sudo apt install tmate
-
      - name: utils
        run: |
           sudo apt install megatools
@@ -49,19 +46,17 @@ jobs:
   
      - name: Setup Rclone
        run: |
-             git clone https://github.com/rclone/rclone
+             git clone https://github.com/nnippon/rclone
              mkdir -p /home/runner/.config/rclone
              mv rclone/rclone.conf /home/runner/.config/rclone
              rm -rf rclone
              mkdir /home/runner/drive
              rclone mount --daemon gdrive:/ /home/runner/drive
-
      - name: Install ErfanGSIs Requirements
        run: |
-          git clone --recurse-submodules https://github.com/Anantgoel0123456/ErfanGSIs /home/runner/ErfanGSIs
-          bash /home/runner/ErfanGSIs/setup.sh
-          bash /home/runner/ErfanGSIs/update.sh
-
+          git clone --recurse-submodules http://github.com/nnippon/gsitools /home/runner/gsi
+          bash /home/runner/gsi/setup.sh
+          bash /home/runner/gsi/update.sh
      - name: Clone botgram shell-bot repo and Generate config
        run: |
           git clone https://github.com/nnippon/shell-bot --depth=1 shell-bot
@@ -72,12 +67,10 @@ jobs:
             "owner": ${{ secrets.ownerID }}
           }
           EOF
-
      - name: Install nodejs Dependencies
        run: |
           cd shell-bot
           npm install
-
      - name: Run shell-bot server
        continue-on-error: true
        timeout-minutes: 310
@@ -85,7 +78,6 @@ jobs:
           cd shell-bot
           export PATH="/home/runner:$PATH"
           node server
-
      - name: Workflow Looping
        continue-on-error: true
        timeout-minutes: 1
